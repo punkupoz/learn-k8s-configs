@@ -1,0 +1,16 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: database-disk
+  namespace: prisma
+  labels:
+    stage: production
+    name: database
+    app: mysql
+spec:
+  accessModes:
+    - ReadWriteMany
+  # storageClassName: local-storage
+  resources:
+    requests:
+      storage: 20Gi

@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prisma-deployment
+  labels:
+    app: prisma
+spec:
+  # serviceName: prisma-server
+  replicas: 3
+  selector:
+    matchLabels:
+      app: prisma
+  template:
+    metadata:
+      labels:
+        app: prisma
+    spec:
+      containers:
+      - name: prisma
+        image: prismagraphql/prisma:1.28
+        ports:
+        - containerPort: 4466
+        env:
+        - name: PRISMA_CONFIG
+          value: |
+            port: 4466
+            # uncomment the next line and provide the env var PRISMA_MANAGEMENT_API_SECRET=my-secret to activate cluster security
+            # managementApiSecret: my-secret
+            databases:
+              default:
+                connector: postgres
+                host: postgres
+                user: prisma
+                password: prisma
+                rawAccess: true
+                port: 5432
+                migrations: true
+      # - name: postgres
+      #   image: postgres
+      #   env:
+      #   - name: POSTGRES_USER
+      #     value: prisma
+      #   - name: POSTGRES_PASSWORD
+      #     value: prisma
+      #   volumeMounts:
+      #   - name: postgresdb
+      #     mountPath: /data
+      # restartPolicy: Always
+      # volumes:
+      # - name: postgresdb
+      #   persistentVolumeClaim:
+      #     claimName: postgres-pv-claim
+  # volumeClaimTemplates:
+  # - metadata:
+  #     name: postgres-pv-claim
+  #   spec:
+  #     accessModes:
+  #       - ReadWriteMany
+  #     storageClassName: "local-storage"
+  #     resources:
+  #       requests:
+  #         storage: 5Gi

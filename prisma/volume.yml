@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-data
+  namespace: prisma
+  labels:
+    stage: production
+    name: database
+    app: mysql
+spec:
+  capacity:
+    storage: 20Gi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Delete
+  claimRef:
+    namespace: prisma
+    name: database-disk
+  storageClassName: local-storage
+  local:
+    path: /mnt/storage/
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - kube-node-1
