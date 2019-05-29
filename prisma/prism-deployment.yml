@@ -2,7 +2,6 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: prisma
-  namespace: prisma
   labels:
     stage: production
     name: prisma
