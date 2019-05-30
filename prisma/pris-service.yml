@@ -3,7 +3,6 @@ kind: Service
 metadata:
   name: prisma
 spec:
-  type: NodePort
   ports:
   - port: 4466
     targetPort: 4466
