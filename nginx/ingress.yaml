@@ -4,17 +4,13 @@ metadata:
   name: ingress-tutorial
   annotations:
     kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/rewrite-target: /teri
-    nginx.ingress.kubernetes.io/ssl-redirect: \"false\"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    # nginx.ingress.kubernetes.io/ssl-redirect: \"false\"
 spec:
-  backend:
-    serviceName: my-nginx-nginx-ingress-default-backend
-    servicePort: 80
   rules:
-  - host: teriterimasumasu.kawaii
-    http:
+  - http:
       paths:
-      - path: /teri
+      - path: /
         backend:
           serviceName: prisma
           servicePort: 4466
